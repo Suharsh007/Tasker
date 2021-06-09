@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".AddTask">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toobar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/teal_200"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/teal_200"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_baseline_keyboard_backspace_24"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tasker"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:gravity="start"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="What is the task ?"
+        android:layout_below="@id/toobar"
+        android:textStyle="bold"
+        android:fontFamily="serif"
+        android:textSize="20sp"
+        android:textColor="@color/teal_200"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="20dp"/>
+    <EditText
+        android:id="@+id/etTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:hint="Enter your task"
+        android:clickable="true"
+        android:drawableRight="@drawable/ic_baseline_add_task_24"
+        android:drawableEnd="@drawable/ic_baseline_add_task_24"
+        android:background="@drawable/et_border"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:inputType="textMultiLine" />
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etTask"
+        android:text="Due date"
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:textColor="@color/teal_200"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="20sp"
+        />
+    <EditText
+        android:id="@+id/etDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:hint="Select a Date"
+        android:background="@drawable/et_border"
+        android:layout_marginTop="5dp"
+        android:drawableRight="@drawable/ic_baseline_calendar_today_24"
+        android:drawableEnd="@drawable/ic_baseline_calendar_today_24"
+        android:layout_marginLeft="15dp"
+        android:focusableInTouchMode="false"
+        android:layout_marginRight="15dp"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:inputType="none"
+        android:clickable="true"
+        />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etDate"
+        android:text="Due time"
+        android:fontFamily="serif"
+        android:textColor="@color/teal_200"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="20sp"
+        />
+    <EditText
+        android:id="@+id/etTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:hint="Select a Time"
+        android:layout_marginTop="5dp"
+        android:drawableRight="@drawable/ic_baseline_access_time_24"
+        android:drawableEnd="@drawable/ic_baseline_access_time_24"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/et_border"
+        android:focusableInTouchMode="false"
+        android:layout_marginRight="15dp"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:clickable="true"
+        />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etTime"
+        android:layout_marginTop="45dp"
+        android:text="Add Task"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:background="@drawable/button_border"
+        />
+
+</RelativeLayout>

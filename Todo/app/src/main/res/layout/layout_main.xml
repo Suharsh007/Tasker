@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="7dp"
+    android:clipToPadding="false"
+    android:background="@drawable/recycler_border"
+    android:layout_marginLeft = "20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp">
+
+    <RelativeLayout
+        android:id="@+id/rL1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft= "15dp">
+
+        <TextView
+            android:id="@+id/tvTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="2dp"
+            android:fontFamily="serif"
+            android:padding="8dp"
+            android:text="Task"
+            android:textColor="@color/black"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:padding="5dp"
+            android:layout_below="@+id/tvTask"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="7dp"
+            android:textColor="@color/teal_200"
+            />
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=","
+            android:fontFamily="serif"
+            android:layout_toRightOf="@+id/tvDate"
+            android:textSize="18sp"
+            android:paddingTop="5dp"
+            android:textStyle="bold"
+            android:layout_below="@+id/tvTask"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="7dp"
+            android:textColor="@color/teal_200"
+            />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTask"
+            android:layout_toRightOf="@+id/tv"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="7dp"
+            android:text="Time"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:textColor="@color/teal_200"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/rL1"
+        android:layout_centerInParent="true"
+        >
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="10dp"
+            android:buttonTint="@color/teal_200"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"/>
+
+
+    </RelativeLayout>
+</RelativeLayout>
