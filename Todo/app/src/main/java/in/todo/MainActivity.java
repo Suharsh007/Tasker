@@ -64,144 +64,27 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this))
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
             Intent i = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:"+getPackageName()));
-            startActivityForResult(i,PERMISSION_REQUEST_CODE);
-        }
-        else
-        {
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(i, PERMISSION_REQUEST_CODE);
+        } else {
             showChatHead();
         }
 
-setDB();
-          init();
+        setDB();
+        init();
 
-         fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this,AddTask.class);
+                Intent i = new Intent(MainActivity.this, AddTask.class);
                 startActivity(i);
                 finish();
             }
         });
 
-        Date c = Calendar.getInstance().getTime();
-
-
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        String date = df.format(c);
-        Date dt = new Date();
-        int h = dt.getHours();
-        int m = dt.getMinutes();
-        int hour;
-        String text;
-        if(h > 12)
-        {
-            hour  = h - 12;
-            text = " PM";
-        }
-        else if(h==12)
-        {
-            hour  = h ;
-            text = " PM";
-        }
-        else
-        {
-            hour  = h;
-            text = " AM";
-        }
-
-        String s = Integer.toString(hour)+":"+Integer.toString(m)+text;
-     //   Log.d(TAG, "onCreate: "+s+" "+date);
-
-        for (int i=0;i<task_list.size();i++) {
-            String task_date = task_list.get(i).getDate();
-            String task_time = task_list.get(i).getTime();
-       //     Log.d(TAG, "onCreate: "+task_time+" "+task_date);
-
-            if (task_date.equals(date) && task_time.equals(s)) {
-                mNotificationManager = (NotificationManager)
-                        getSystemService(NOTIFICATION_SERVICE);
-                Intent notifyIntent = new Intent(this, AlarmReceiver.class);
-
-
-                final PendingIntent notifyPendingIntent = PendingIntent.getBroadcast
-                        (this, NOTIFICATION_ID, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-              String dateString = task_date+" "+task_time;
-              @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-
-                Date date1 = null;
-                try {
-                    date1 = sdf.parse(dateString);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                Log.d(TAG, "onCreate: "+date1.toString());
-                long triggerTime = date1.getTime();
-                Log.d(TAG, "onCreate: "+ Long.toString(triggerTime));
-                // If the Toggle is turned on, set the repeating alarm with
-                // a 15 minute interval.
-                if (alarmManager != null) {
-                    alarmManager.setExact
-                            (AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                                    triggerTime,
-                                    notifyPendingIntent);
-                    // alarmManager.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP,triggerTime,notifyPendingIntent);
-                }
-
-
-                createNotificationChannel();
-
-            } else {
-                 continue;
-            }
-
-        }
-
-    }
-    public void createNotificationChannel() {
-
-        // Create a notification manager object.
-        mNotificationManager =
-                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        // Notification channels are only available in OREO and higher.
-        // So, add a check on SDK version.
-        if (android.os.Build.VERSION.SDK_INT >=
-                android.os.Build.VERSION_CODES.O) {
-
-            // Create the NotificationChannel with all the parameters.
-            NotificationChannel notificationChannel = new NotificationChannel
-                    (PRIMARY_CHANNEL_ID,
-                            "Stand up notification",
-                            NotificationManager.IMPORTANCE_HIGH);
-
-            notificationChannel.enableLights(true);
-            notificationChannel.setLightColor(Color.RED);
-            notificationChannel.enableVibration(true);
-            notificationChannel.setDescription
-                    ("Notifies every 15 minutes to stand up and walk");
-            mNotificationManager.createNotificationChannel(notificationChannel);
-        }
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PERMISSION_REQUEST_CODE)
-        {
-            if(resultCode == RESULT_OK)
-            {
-                showChatHead();
-            }
-        }
     }
 
     private void showChatHead() {

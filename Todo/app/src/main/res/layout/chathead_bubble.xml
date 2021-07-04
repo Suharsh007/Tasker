@@ -42,6 +42,7 @@
               android:textColor="@color/white"
               android:gravity="center_horizontal"
               android:textStyle="bold"/>
+
           <ImageButton
               android:layout_width="24dp"
               android:layout_height="24dp"

@@ -7,7 +7,9 @@ import androidx.room.Database;
 import androidx.room.Room;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -29,7 +31,11 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class AddTask extends AppCompatActivity {
     EditText etTask,etDate , etTime;
@@ -37,6 +43,7 @@ public class AddTask extends AppCompatActivity {
     Button btnSubmit;
     DataBase database;
     ImageButton btnBack;
+    String timeTonotify;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,53 +151,21 @@ public class AddTask extends AppCompatActivity {
              /*   etDate.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.black), PorterDuff.Mode.SRC_ATOP);
                 etTask.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.black), PorterDuff.Mode.SRC_ATOP);
                 etTime.getBackground().mutate().setColorFilter(getResources().getColor(R.color.teal_200), PorterDuff.Mode.SRC_ATOP);*/
-                final Calendar c = Calendar.getInstance();
-                mHour = c.get(Calendar.HOUR_OF_DAY);
-                mMinute = c.get(Calendar.MINUTE);
-
-
-                TimePickerDialog timePickerDialog = new TimePickerDialog(AddTask.this,
-                        new TimePickerDialog.OnTimeSetListener() {
-
-                            @SuppressLint("SetTextI18n")
-                            @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay,
-                                                  int minute) {
-                                int hour = 0; String text = "";
-                                String t ="";
-                       if(hourOfDay > 12)
-                       {
-                            hour  = hourOfDay - 12;
-                           text = "PM";
-                       }
-                       else if(hourOfDay==12)
-                       {
-                           hour  = hourOfDay ;
-                           text = "PM";
-                       }
-                       else
-                       {
-                           hour  = hourOfDay ;
-                           text = "AM";
-                       }
-                       if(minute == 0)
-                       {
-                           t = "00";
-                       }
-                       else if(minute<10)
-                       {
-                           t = "0"+Integer.toString(minute);
-                       }
-                       else
-                       {
-                           t = Integer.toString(minute);
-                       }
-                                etTime.setText(hour + ":" + t+" "+text);
-                            }
-                        }, mHour, mMinute, false);
+                Calendar calendar = Calendar.getInstance();
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
+                TimePickerDialog timePickerDialog = new TimePickerDialog(AddTask.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        timeTonotify = i + ":" + i1;
+                       etTime.setText(FormatTime(i, i1));
+                    }
+                }, hour, minute, false);
                 timePickerDialog.show();
             }
         });
+
+
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,11 +181,37 @@ public class AddTask extends AppCompatActivity {
                 {
                 Task task = new Task(task1,date,time);
                 database.dao().taskInsertion(task);
+                    setAlarm(task1, date, time);
                 Intent i = new Intent(AddTask.this,MainActivity.class);
                 startActivity(i);
                 finish();}
             }
         });
+    }
+
+
+
+    private void setAlarm(String text, String date, String time) {
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Intent intent = new Intent(getApplicationContext(), AlarmBroadcast.class);
+        intent.putExtra("event", text);
+        intent.putExtra("time", date);
+        intent.putExtra("date", time);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        String dateandtime = date + " " + timeTonotify;
+        DateFormat formatter = new SimpleDateFormat("d-M-yyyy hh:mm");
+        try {
+            Date date1 = formatter.parse(dateandtime);
+            am.set(AlarmManager.RTC_WAKEUP, date1.getTime(), pendingIntent);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        finish();
+
     }
 
     public void showKeyboard() {
@@ -236,6 +237,33 @@ public class AddTask extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Toast.makeText(getApplicationContext(), "Back press disabled", Toast.LENGTH_SHORT).show();
+    }
+    public String FormatTime(int hour, int minute) {
+
+        String time;
+        time = "";
+        String formattedMinute;
+
+        if (minute / 10 == 0) {
+            formattedMinute = "0" + minute;
+        } else {
+            formattedMinute = "" + minute;
+        }
+
+
+        if (hour == 0) {
+            time = "12" + ":" + formattedMinute + " AM";
+        } else if (hour < 12) {
+            time = hour + ":" + formattedMinute + " AM";
+        } else if (hour == 12) {
+            time = "12" + ":" + formattedMinute + " PM";
+        } else {
+            int temp = hour - 12;
+            time = temp + ":" + formattedMinute + " PM";
+        }
+
+
+        return time;
     }
 
 

@@ -54,6 +54,7 @@ public class ChatheadService extends Service {
         final View  chatheadImage = chatheadView.findViewById(R.id.chatHead);
         final View expandedView = chatheadView.findViewById(R.id.clickBubble);
         ImageButton closeBtn = chatheadView.findViewById(R.id.closeBtn);
+
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

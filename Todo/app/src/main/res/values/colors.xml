@@ -9,4 +9,5 @@
     <color name="black">#000000</color>
     <color name="background">#C6F8F6</color>
     <color name="toolbar">#004DCC</color>
+    <color name="red">#FF5722</color>
 </resources>
